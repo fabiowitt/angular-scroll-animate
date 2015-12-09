@@ -40,8 +40,8 @@ angular.module('angular-scroll-animate', []);// Source: src/angular-scroll-anima
  *   </file>
  * </example>
  */
-angular.module('angular-scroll-animate', []).directive('whenVisible', ['$document', '$window',
- function($document, $window) {
+angular.module('angular-scroll-animate', []).directive('whenVisible', ['$document', '$window', '$timeout',
+ function($document, $window, $timeout) {
 
     var determineWhereElementIsInViewport =
       function($el, viewportHeight, whenVisibleFn, whenNotVisibleFn, delayPercent, scope) {
@@ -116,13 +116,16 @@ angular.module('angular-scroll-animate', []).directive('whenVisible', ['$documen
         };
 
         var onScroll = function() {
-
+$timeout(function () {
+ 
           if (!checkPending) {
             checkPending = true;
 
             /* globals requestAnimationFrame */
             requestAnimationFrame(updateVisibility);
           }
+})
+
         };
 
         var documentListenerEvents = 'scroll';
